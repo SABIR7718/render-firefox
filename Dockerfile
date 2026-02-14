@@ -6,10 +6,6 @@ ENV DISPLAY=:1
 RUN apt update && apt install -y \
     firefox \
     xvfb \
-    x11vnc \
-    novnc \
-    websockify \
-    fluxbox \
     unzip \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
@@ -22,5 +18,4 @@ COPY start.sh /start.sh
 RUN unzip /profile.zip -d /profile \
  && chmod +x /start.sh
 
-EXPOSE 8080
 CMD ["/start.sh"]

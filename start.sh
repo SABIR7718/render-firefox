@@ -1,20 +1,18 @@
 #!/bin/bash
 
+export DISPLAY=:1
+
+# start virtual display
 Xvfb :1 -screen 0 1280x800x16 &
 sleep 3
 
-export DISPLAY=:1
+# start firefox with your cookies
+firefox --profile /profile "https://idx.google.com/vps123-73177745" &
 
-# Start desktop
-startxfce4 &
-
-sleep 5
-
-# Start Firefox with your profile
-firefox --profile /profile &
-
-# Start VNC
-x11vnc -display :1 -nopw -forever -shared -localhost &
-
-# Web access
-websockify --web=/usr/share/novnc/ 0.0.0.0:8080 localhost:5900
+# keep refreshing every 10 minutes
+while true; do
+  sleep 600
+  pkill -f firefox
+  sleep 2
+  firefox --profile /profile "https://idx.google.com/vps123-73177745" &
+done
