@@ -1,17 +1,20 @@
 #!/bin/bash
 
-# virtual display
-Xvfb :1 -screen 0 1280x720x16 &
-sleep 2
+Xvfb :1 -screen 0 1280x800x16 &
+sleep 3
 
-# window manager
-fluxbox &
+export DISPLAY=:1
 
-# start firefox with your cookies
+# Start desktop
+startxfce4 &
+
+sleep 5
+
+# Start Firefox with your profile
 firefox --profile /profile &
 
-# vnc (internal)
+# Start VNC
 x11vnc -display :1 -nopw -forever -shared -localhost &
 
-# novnc web (ONLY exposed port)
+# Web access
 websockify --web=/usr/share/novnc/ 0.0.0.0:8080 localhost:5900
